@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Book from './Book';
+import BookItem from './BookItem';
 
 const BooksShelf = ({ bookShelf }) => {
     return (
@@ -9,7 +9,7 @@ const BooksShelf = ({ bookShelf }) => {
                 <ol className="books-grid">
                     {bookShelf.books.map((book) => (
                         <li key={book.bookTitle}>
-                            <Book
+                            <BookItem
                                 bookTitle={book.bookTitle}
                                 bookAuthor={book.bookAuthor}
                                 bookImage={book.bookImage}

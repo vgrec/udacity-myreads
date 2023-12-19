@@ -1,3 +1,5 @@
+import OptionsMenu from "./OptionsMenu";
+
 const Book = ({ bookTitle, bookAuthor, bookImage }) => {
 
     return (
@@ -11,19 +13,7 @@ const Book = ({ bookTitle, bookAuthor, bookImage }) => {
                         backgroundImage: `url("${bookImage}}")`,
                     }}
                 ></div>
-                <div className="book-shelf-changer">
-                    <select>
-                        <option value="none" disabled>
-                            Move to...
-                        </option>
-                        <option value="currentlyReading">
-                            Currently Reading
-                        </option>
-                        <option value="wantToRead">Want to Read</option>
-                        <option value="read">Read</option>
-                        <option value="none">None</option>
-                    </select>
-                </div>
+                <OptionsMenu onOptionSelected={(option) => console.log(option)} />
             </div>
             <div className="book-title">{bookTitle}</div>
             <div className="book-authors">{bookAuthor}</div>

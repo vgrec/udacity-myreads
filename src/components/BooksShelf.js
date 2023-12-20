@@ -13,7 +13,7 @@ const BooksShelf = ({ bookShelf, onOptionsSelected }) => {
                                 bookTitle={book.bookTitle}
                                 bookAuthor={book.bookAuthor}
                                 bookImage={book.bookImage}
-                                onOptionSelected={(option) => onOptionsSelected(option)}
+                                onOptionSelected={(option) => onOptionsSelected(option, book)}
                             />
                         </li>
                     ))}

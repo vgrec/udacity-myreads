@@ -87,7 +87,9 @@ function App() {
         <Route exact path="/" element={
           <BooksPage
             shelfs={shelfs}
-            onOptionsSelected={(option) => console.log("selected: " + option)} />
+            onOptionsSelected={(option, book) => {
+              console.log("selected: " + option + " shelf: " + book.shelfId + " bookId: " + book.bookId)
+            }} />
         } />
 
         <Route path="/search" element={

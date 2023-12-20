@@ -8,7 +8,7 @@ const BooksShelf = ({ bookShelf, onOptionsSelected }) => {
             <div className="bookshelf-books">
                 <ol className="books-grid">
                     {bookShelf.books.map((book) => (
-                        <li key={book.bookTitle}>
+                        <li key={book.bookId}>
                             <BookItem
                                 bookTitle={book.bookTitle}
                                 bookAuthor={book.bookAuthor}

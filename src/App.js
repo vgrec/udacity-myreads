@@ -36,7 +36,8 @@ function App() {
 
     fetchAllBooks().then(remoteShelves => {
       const shelfData = remoteShelves.map(remoteShelf => ({
-        title: remoteShelf.shelf,
+        shelfId: remoteShelf.shelf,
+        bookId: remoteShelf.id,
         bookTitle: remoteShelf.title,
         bookAuthor: remoteShelf.authors.join(", "),
         bookImage: remoteShelf.imageLinks.thumbnail
@@ -44,14 +45,18 @@ function App() {
 
       let dictionary = {};
       shelfData.forEach(shelf => {
-        if (dictionary[shelf.title]) {
-          dictionary[shelf.title].push({
+        if (dictionary[shelf.shelfId]) {
+          dictionary[shelf.shelfId].push({
+            shelfId: shelf.shelfId,
+            bookId: shelf.bookId,
             bookTitle: shelf.bookTitle,
             bookAuthor: shelf.bookAuthor,
             bookImage: shelf.bookImage
           });
         } else {
-          dictionary[shelf.title] = [{
+          dictionary[shelf.shelfId] = [{
+            shelfId: shelf.shelfId,
+            bookId: shelf.bookId,
             bookTitle: shelf.bookTitle,
             bookAuthor: shelf.bookAuthor,
             bookImage: shelf.bookImage
@@ -59,13 +64,11 @@ function App() {
         }
       });
 
-      console.log(dictionary);
-
       const shelfs = Object.keys(dictionary).map(key => ({
+        shelfId: key,
         title: key,
         books: dictionary[key]
       }));
-
 
       setShelfs(shelfs);
     });

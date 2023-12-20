@@ -1,14 +1,16 @@
+import { Link, useNavigate } from "react-router-dom";
+
 const SearchPage = ({ onBackButtonPressed }) => {
+    const navigate = useNavigate();
 
     return (
         <div className="search-books">
             <div className="search-books-bar">
-                <a
+                <Link
                     className="close-search"
-                    onClick={() => onBackButtonPressed()}
-                >
+                    onClick={() => { navigate(-1) }}>
                     Close
-                </a>
+                </Link>
                 <div className="search-books-input-wrapper">
                     <input
                         type="text"

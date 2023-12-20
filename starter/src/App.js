@@ -2,10 +2,9 @@ import "./App.css";
 import { useState } from "react";
 import SearchPage from "./components/SearchPage";
 import BooksPage from "./components/BooksPage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-
   const [shelfs, setShelfs] = useState([
     {
       title: "Currently Reading",
@@ -61,12 +60,15 @@ function App() {
 
   return (
     <div className="app">
-      {showSearchPage
-        ? <SearchPage onBackButtonPressed={() => setShowSearchpage(!showSearchPage)} />
-        : <BooksPage
-          shelfs={shelfs}
-          onOpenSearchButtonPressed={() => setShowSearchpage(!showSearchPage)} />
-      }
+      <Routes>
+        <Route exact path="/" element={
+          <BooksPage shelfs={shelfs} />
+        } />
+
+        <Route path="/search" element={
+          <SearchPage />
+        } />
+      </Routes>
     </div>
   );
 }

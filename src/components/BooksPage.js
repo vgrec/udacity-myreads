@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import BooksShelf from "./BooksShelf";
 
-const BooksPage = ({ shelfs, onOpenSearchButtonPressed }) => {
+const BooksPage = ({ shelfs, onOptionsSelected }) => {
     return (
         <div className="list-books">
             <div className="list-books-title">
@@ -10,9 +10,11 @@ const BooksPage = ({ shelfs, onOpenSearchButtonPressed }) => {
             <div className="list-books-content">
                 <div>
                     {shelfs.map((shelf) => (
-                        <BooksShelf key={shelf.bookTitle} bookShelf={shelf} />
-                    ))
-                    }
+                        <BooksShelf
+                            key={shelf.bookTitle}
+                            bookShelf={shelf}
+                            onOptionsSelected={(option) => onOptionsSelected(option)} />
+                    ))}
                 </div>
             </div>
             <div className="open-search">

@@ -82,7 +82,9 @@ function App() {
     <div className="app">
       <Routes>
         <Route exact path="/" element={
-          <BooksPage shelfs={shelfs} />
+          <BooksPage
+            shelfs={shelfs}
+            onOptionsSelected={(option) => console.log("selected: " + option)} />
         } />
 
         <Route path="/search" element={

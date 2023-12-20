@@ -1,6 +1,6 @@
 import OptionsMenu from "./OptionsMenu";
 
-const Book = ({ bookTitle, bookAuthor, bookImage }) => {
+const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected }) => {
 
     return (
         <div className="book">
@@ -13,7 +13,7 @@ const Book = ({ bookTitle, bookAuthor, bookImage }) => {
                         backgroundImage: `url("${bookImage}}")`,
                     }}
                 ></div>
-                <OptionsMenu onOptionSelected={(option) => console.log(option)} />
+                <OptionsMenu onOptionSelected={(option) => onOptionSelected(option)} />
             </div>
             <div className="book-title">{bookTitle}</div>
             <div className="book-authors">{bookAuthor}</div>

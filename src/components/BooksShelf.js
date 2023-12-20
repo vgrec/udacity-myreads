@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import BookItem from './BookItem';
 
-const BooksShelf = ({ bookShelf }) => {
+const BooksShelf = ({ bookShelf, onOptionsSelected }) => {
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{bookShelf.title}</h2>
@@ -13,6 +13,7 @@ const BooksShelf = ({ bookShelf }) => {
                                 bookTitle={book.bookTitle}
                                 bookAuthor={book.bookAuthor}
                                 bookImage={book.bookImage}
+                                onOptionSelected={(option) => onOptionsSelected(option)}
                             />
                         </li>
                     ))}

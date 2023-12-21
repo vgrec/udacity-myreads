@@ -3,68 +3,14 @@ import { useState, useEffect } from "react";
 import SearchPage from "./components/SearchPage";
 import BooksPage from "./components/BooksPage";
 import { Route, Routes } from "react-router-dom";
-import { getAll, search, update } from "./BooksAPI";
+import { fetchAllShelves, searchBooks, moveBookToShelf } from "./BooksRepository";
 
 function App() {
   const [shelfs, setShelfs] = useState([])
   const [textQuery, setTextQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
-  const fetchAllShelves = async () => {
-    try {
-      const remoteShelves = await getAll();
-      const shelfs = groupBooksByShelfs(remoteShelves);
-      setShelfs(shelfs);
-    } catch (error) {
-      console.log(error);
-      setShelfs([]);
-    }
-  }
-
-  const groupBooksByShelfs = (remoteShelves) => {
-    const shelfsStrings = {
-      currentlyReading: "Currently Reading",
-      wantToRead: "Want to Read",
-      read: "Read"
-    };
-
-    const shelfData = remoteShelves.map(remoteShelf => ({
-      shelfId: remoteShelf.shelf,
-      bookId: remoteShelf.id,
-      bookTitle: remoteShelf.title,
-      bookAuthor: remoteShelf.authors ? remoteShelf.authors.join(", ") : "",
-      bookImage: remoteShelf.imageLinks ? remoteShelf.imageLinks.thumbnail : ""
-    }));
-
-    let dictionary = {};
-    shelfData.forEach(shelf => {
-      if (dictionary[shelf.shelfId]) {
-        dictionary[shelf.shelfId].push({
-          shelfId: shelf.shelfId,
-          bookId: shelf.bookId,
-          bookTitle: shelf.bookTitle,
-          bookAuthor: shelf.bookAuthor,
-          bookImage: shelf.bookImage
-        });
-      } else {
-        dictionary[shelf.shelfId] = [{
-          shelfId: shelf.shelfId,
-          bookId: shelf.bookId,
-          bookTitle: shelf.bookTitle,
-          bookAuthor: shelf.bookAuthor,
-          bookImage: shelf.bookImage
-        }];
-      }
-    });
-
-    return Object.keys(dictionary).map(key => ({
-      shelfId: key,
-      title: shelfsStrings[key],
-      books: dictionary[key]
-    }));
-  };
-
-  const handleOptionsSelected = async (selectedShelfId, book) => {
+  const handleOptionsSelected = (selectedShelfId, book) => {
     console.log("current: " + book.shelfId + ", move to: " + selectedShelfId + ", bookId: " + book.bookId);
 
     if (selectedShelfId === book.shelfId) {
@@ -72,9 +18,10 @@ function App() {
       return;
     }
 
-    await update({ id: book.bookId }, selectedShelfId);
-
-    fetchAllShelves();
+    moveBookToShelf(book.bookId, selectedShelfId);
+    fetchAllShelves().then(shelfs => {
+      setShelfs(shelfs);
+    });
   };
 
   const handleTextQueryChange = (textQuery) => {
@@ -82,14 +29,14 @@ function App() {
   }
 
   useEffect(() => {
-    fetchAllShelves();
+    fetchAllShelves().then(shelfs => {
+      setShelfs(shelfs);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-
-
   useEffect(() => {
-    const fetchSearchResults = async () => {
+    const fetchSearchResults = () => {
       if (textQuery.length === 0) {
         console.log("no text query, no need to search");
         setSearchResults([]);
@@ -97,23 +44,11 @@ function App() {
       }
 
       console.log("searching for: " + textQuery);
-
-      try {
-        const res = await search(textQuery, 1);
-        console.log(res);
-
-        setSearchResults(
-          res.map((book) => ({
-            bookId: book.id,
-            bookTitle: book.title,
-            bookAuthor: book.authors ? book.authors.join(", ") : "",
-            bookImage: book.imageLinks ? book.imageLinks.thumbnail : "",
-          }))
-        );
-      } catch (error) {
-        console.log("Error performing search:", error);
-        setSearchResults([]);
-      }
+      
+      searchBooks(textQuery).then(res => {
+        console.log("results:", res);
+        setSearchResults(res)
+      });
     };
 
     const timerId = setTimeout(fetchSearchResults, 500);

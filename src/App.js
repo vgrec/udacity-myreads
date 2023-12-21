@@ -28,8 +28,8 @@ function App() {
       shelfId: remoteShelf.shelf,
       bookId: remoteShelf.id,
       bookTitle: remoteShelf.title,
-      bookAuthor: remoteShelf.authors.join(", "),
-      bookImage: remoteShelf.imageLinks.thumbnail
+      bookAuthor: remoteShelf.authors ? remoteShelf.authors.join(", ") : "",
+      bookImage: remoteShelf.imageLinks ? remoteShelf.imageLinks.thumbnail : ""
     }));
 
     let dictionary = {};

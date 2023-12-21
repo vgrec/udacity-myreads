@@ -94,8 +94,17 @@ function App() {
 
       console.log("searching for: " + textQuery);
 
-      const res = await search(textQuery, 20);
-      setSearchResults(res);
+      const res = await search(textQuery, 1);
+      console.log(res);
+
+      setSearchResults(
+        res.map((book) => ({
+          bookId: book.id,
+          bookTitle: book.title,
+          bookAuthor: book.authors ? book.authors.join(", ") : "",
+          bookImage: book.imageLinks ? book.imageLinks.thumbnail : "",
+        }))
+      );
     };
 
     const timerId = setTimeout(fetchSearchResults, 500);

@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import SearchPage from "./components/SearchPage";
 import BooksPage from "./components/BooksPage";
 import { Route, Routes } from "react-router-dom";
-import { getAll, update } from "./BooksAPI";
+import { getAll, search, update } from "./BooksAPI";
 
 function App() {
   const [shelfs, setShelfs] = useState([])
+  const [textQuery, setTextQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const fetchAllShelves = async () => {
     await getAll().then(remoteShelves => {
@@ -71,12 +73,35 @@ function App() {
     fetchAllShelves();
   };
 
-
+  const handleTextQueryChange = (textQuery) => {
+    setTextQuery(textQuery);
+  }
 
   useEffect(() => {
     fetchAllShelves();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+
+
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (textQuery.length === 0) {
+        console.log("no text query, no need to search");
+        setSearchResults([]);
+        return;
+      }
+
+      console.log("searching for: " + textQuery);
+
+      const res = await search(textQuery, 20);
+      setSearchResults(res);
+    };
+
+    const timerId = setTimeout(fetchSearchResults, 500);
+
+    return () => clearTimeout(timerId); // cleanup on unmount or on next run
+  }, [textQuery]);
 
   return (
     <div className="app">
@@ -90,7 +115,13 @@ function App() {
         } />
 
         <Route path="/search" element={
-          <SearchPage />
+          <SearchPage
+            onTextQueryChange={(textQuery) => {
+              handleTextQueryChange(textQuery);
+            }}
+            textQuery={textQuery}
+            searchResults={searchResults}
+          />
         } />
       </Routes>
     </div>

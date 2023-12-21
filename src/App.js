@@ -11,10 +11,14 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
 
   const fetchAllShelves = async () => {
-    await getAll().then(remoteShelves => {
+    try {
+      const remoteShelves = await getAll();
       const shelfs = groupBooksByShelfs(remoteShelves);
       setShelfs(shelfs);
-    });
+    } catch (error) {
+      console.log(error);
+      setShelfs([]);
+    }
   }
 
   const groupBooksByShelfs = (remoteShelves) => {
@@ -94,17 +98,22 @@ function App() {
 
       console.log("searching for: " + textQuery);
 
-      const res = await search(textQuery, 1);
-      console.log(res);
+      try {
+        const res = await search(textQuery, 1);
+        console.log(res);
 
-      setSearchResults(
-        res.map((book) => ({
-          bookId: book.id,
-          bookTitle: book.title,
-          bookAuthor: book.authors ? book.authors.join(", ") : "",
-          bookImage: book.imageLinks ? book.imageLinks.thumbnail : "",
-        }))
-      );
+        setSearchResults(
+          res.map((book) => ({
+            bookId: book.id,
+            bookTitle: book.title,
+            bookAuthor: book.authors ? book.authors.join(", ") : "",
+            bookImage: book.imageLinks ? book.imageLinks.thumbnail : "",
+          }))
+        );
+      } catch (error) {
+        console.log("Error performing search:", error);
+        setSearchResults([]);
+      }
     };
 
     const timerId = setTimeout(fetchSearchResults, 500);

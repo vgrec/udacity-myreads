@@ -13,7 +13,7 @@ const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected }) => {
                         backgroundImage: `url("${bookImage}}")`,
                     }}
                 ></div>
-                <OptionsMenu onOptionSelected={(option) => onOptionSelected(option)} />
+                <OptionsMenu onOptionSelected={(selectedShelfId) => onOptionSelected(selectedShelfId)} />
             </div>
             <div className="book-title">{bookTitle}</div>
             <div className="book-authors">{bookAuthor}</div>

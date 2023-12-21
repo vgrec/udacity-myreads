@@ -3,14 +3,16 @@ import { useState, useEffect } from "react";
 import SearchPage from "./components/SearchPage";
 import BooksPage from "./components/BooksPage";
 import { Route, Routes } from "react-router-dom";
-import { getAll, search, update } from "./BooksAPI";
+import { getAll, update } from "./BooksAPI";
 
 function App() {
   const [shelfs, setShelfs] = useState([])
 
   const fetchAllShelves = async () => {
-    const res = await getAll();
-    return res;
+    await getAll().then(remoteShelves => {
+      const shelfs = groupBooksByShelfs(remoteShelves);
+      setShelfs(shelfs);
+    });
   }
 
   const groupBooksByShelfs = (remoteShelves) => {
@@ -56,32 +58,24 @@ function App() {
     }));
   };
 
-  const refreshAllShelves = async () => {
-    fetchAllShelves().then(remoteShelves => {
-      const shelfs = groupBooksByShelfs(remoteShelves);
-      setShelfs(shelfs);
-    });
-  };
+  const handleOptionsSelected = async (selectedShelfId, book) => {
+    console.log("current: " + book.shelfId + ", move to: " + selectedShelfId + ", bookId: " + book.bookId);
 
-  const handleOptionsSelected = async (option, book) => {
-    console.log("selected: " + option + " shelf: " + book.shelfId + " bookId: " + book.bookId);
+    if (selectedShelfId === book.shelfId) {
+      console.log("same shelf, no need to update");
+      return;
+    }
 
-    await update({ id: book.bookId }, option);
+    await update({ id: book.bookId }, selectedShelfId);
 
-    refreshAllShelves();
+    fetchAllShelves();
   };
 
 
 
   useEffect(() => {
-    refreshAllShelves();
-
-    // const searchBooks = async (query, maxResults) => {
-    //   const res = await search(query, maxResults);
-    //   console.log(res);
-    // }
-    // searchBooks("Linux", 20);
-
+    fetchAllShelves();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

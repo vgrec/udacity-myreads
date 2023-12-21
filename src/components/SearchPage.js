@@ -1,4 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
+//import { search } from "./BooksAPI";
+
+
+// const searchBooks = async (query, maxResults) => {
+//   const res = await search(query, maxResults);
+//   console.log(res);
+// }
+// searchBooks("Linux", 20);
 
 const SearchPage = ({ onBackButtonPressed }) => {
     const navigate = useNavigate();

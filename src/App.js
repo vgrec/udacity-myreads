@@ -10,12 +10,16 @@ function App() {
 
   const fetchAllShelves = async () => {
     const res = await getAll();
-    console.log(res);
-
     return res;
   }
 
   const groupBooksByShelfs = (remoteShelves) => {
+    const shelfsStrings = {
+      currentlyReading: "Currently Reading",
+      wantToRead: "Want to Read",
+      read: "Read"
+    };
+
     const shelfData = remoteShelves.map(remoteShelf => ({
       shelfId: remoteShelf.shelf,
       bookId: remoteShelf.id,
@@ -47,7 +51,7 @@ function App() {
 
     return Object.keys(dictionary).map(key => ({
       shelfId: key,
-      title: key,
+      title: shelfsStrings[key],
       books: dictionary[key]
     }));
   };

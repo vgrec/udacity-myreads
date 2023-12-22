@@ -4,9 +4,7 @@ MyReads project is a bookshelf app created as part of the Udacity React Nanodegr
 
 ### Prerequisites
 
-Before you begin, ensure you have met the following requirements:
-
-* You have installed the latest version of [Node.js and npm](https://nodejs.org/en/download/). If you're using a Mac, you can also install Node.js and npm using [Homebrew](https://brew.sh/).
+Before you begin, ensure you have installed the latest version of [Node.js and npm](https://nodejs.org/en/download/).
 
 ### Installation
 
@@ -18,3 +16,10 @@ To install MyReads, follow these steps:
 ```bash
 npm install
 npm start
+```
+
+### Screenshots
+
+| Main Page | Search Page |
+|:---------:|:-----------:|
+| ![Main Page](./screenshots/main.png) | ![Search Page](./screenshots/search.png) |

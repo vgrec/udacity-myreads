@@ -1,6 +1,6 @@
 import OptionsMenu from "./OptionsMenu";
 
-const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected, shelfId }) => {
+const BookItem = ({ bookTitle, bookAuthor, bookImage, onOptionSelected, shelfId }) => {
 
     return (
         <div className="book">
@@ -23,4 +23,4 @@ const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected, shelfId }) =
     )
 }
 
-export default Book;
+export default BookItem;

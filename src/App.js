@@ -18,9 +18,10 @@ function App() {
       return;
     }
 
-    moveBookToShelf(book.bookId, selectedShelfId);
-    fetchAllShelves().then(shelfs => {
-      setShelfs(shelfs);
+    moveBookToShelf(book.bookId, selectedShelfId).then(() => {
+      fetchAllShelves().then(shelfs => {
+        setShelfs(shelfs);
+      });
     });
   };
 

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import BookItem from "./BookItem";
 
-const SearchPage = ({ textQuery, onTextQueryChange, searchResults, onOptionsSelected }) => {
+const SearchPage = ({ textQuery, onTextQueryChange, searchResults, onOptionsSelected, bookIdsToShelfIds }) => {
     console.log(searchResults);
 
     const handleChange = (event) => {
@@ -36,6 +36,7 @@ const SearchPage = ({ textQuery, onTextQueryChange, searchResults, onOptionsSele
                                 bookAuthor={book.bookAuthor}
                                 bookImage={book.bookImage}
                                 onOptionSelected={(option) => onOptionsSelected(option, book)}
+                                shelfId={bookIdsToShelfIds[book.bookId] || "none"}
                             />
                         </li>
                     ))}

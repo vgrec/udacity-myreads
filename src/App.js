@@ -74,7 +74,6 @@ function App() {
             onOptionsSelected={(option, book) => {
               handleOptionsSelected(option, book);
             }}
-            bookIdsToShelfIds={bookIdsToShelfIds}
           />
         } />
 
@@ -88,6 +87,7 @@ function App() {
             onOptionsSelected={(option, book) => {
               handleOptionsSelected(option, book);
             }}
+            bookIdsToShelfIds={bookIdsToShelfIds}
           />
         } />
       </Routes>

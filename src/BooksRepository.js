@@ -13,6 +13,7 @@ export const fetchAllShelves = async () => {
 export const searchBooks = async (query) => {
     try {
         const res = await search(query, 20);
+        console.log("search results:", res);
         return res.map((book) => ({
             bookId: book.id,
             bookTitle: book.title,

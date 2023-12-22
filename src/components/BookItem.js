@@ -1,6 +1,6 @@
 import OptionsMenu from "./OptionsMenu";
 
-const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected }) => {
+const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected, shelfId }) => {
 
     return (
         <div className="book">
@@ -13,7 +13,9 @@ const Book = ({ bookTitle, bookAuthor, bookImage, onOptionSelected }) => {
                         backgroundImage: `url("${bookImage}}")`,
                     }}
                 ></div>
-                <OptionsMenu onOptionSelected={(selectedShelfId) => onOptionSelected(selectedShelfId)} />
+                <OptionsMenu
+                    defaultSelectedOption={shelfId}
+                    onOptionSelected={(selectedShelfId) => onOptionSelected(selectedShelfId)} />
             </div>
             <div className="book-title">{bookTitle}</div>
             <div className="book-authors">{bookAuthor}</div>

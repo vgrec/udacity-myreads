@@ -15,7 +15,8 @@ const BooksPage = ({ shelfs, onOptionsSelected }) => {
                         <BooksShelf
                             key={shelf.shelfId}
                             bookShelf={shelf}
-                            onOptionsSelected={(selectedShelfId, book) => onOptionsSelected(selectedShelfId, book)} />
+                            onOptionsSelected={(selectedShelfId, book) => onOptionsSelected(selectedShelfId, book)}
+                        />
                     )
                     )}
                 </div>

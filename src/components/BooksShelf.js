@@ -14,6 +14,7 @@ const BooksShelf = ({ bookShelf, onOptionsSelected }) => {
                                 bookAuthor={book.bookAuthor}
                                 bookImage={book.bookImage}
                                 onOptionSelected={(option) => onOptionsSelected(option, book)}
+                                shelfId={bookShelf.shelfId}
                             />
                         </li>
                     ))}

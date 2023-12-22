@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import SearchPage from "./components/SearchPage";
 import BooksPage from "./components/BooksPage";
 import { Route, Routes } from "react-router-dom";
@@ -28,6 +28,15 @@ function App() {
     setTextQuery(textQuery);
   }
 
+  const bookIdsToShelfIds = useMemo(() => {
+    return shelfs.reduce((acc, shelf) => {
+      shelf.books.forEach(book => {
+        acc[book.bookId] = shelf.shelfId;
+      });
+      return acc;
+    }, {});
+  }, [shelfs]);
+
   useEffect(() => {
     fetchAllShelves().then(shelfs => {
       setShelfs(shelfs);
@@ -44,7 +53,7 @@ function App() {
       }
 
       console.log("searching for: " + textQuery);
-      
+
       searchBooks(textQuery).then(res => {
         console.log("results:", res);
         setSearchResults(res)
@@ -64,7 +73,9 @@ function App() {
             shelfs={shelfs}
             onOptionsSelected={(option, book) => {
               handleOptionsSelected(option, book);
-            }} />
+            }}
+            bookIdsToShelfIds={bookIdsToShelfIds}
+          />
         } />
 
         <Route path="/search" element={
@@ -74,6 +85,9 @@ function App() {
             }}
             textQuery={textQuery}
             searchResults={searchResults}
+            onOptionsSelected={(option, book) => {
+              handleOptionsSelected(option, book);
+            }}
           />
         } />
       </Routes>

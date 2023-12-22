@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const OptionsMenu = ({ onOptionSelected }) => {
+const OptionsMenu = ({ defaultSelectedOption = 'none', onOptionSelected }) => {
     const [selectedOption, setSelectedOption] = useState('none');
+
+    useEffect(() => {
+        setSelectedOption(defaultSelectedOption);
+    }, [defaultSelectedOption]);
 
     const handleChange = (event) => {
         const selectedOption = event.target.value;
@@ -15,7 +19,7 @@ const OptionsMenu = ({ onOptionSelected }) => {
                 value={selectedOption}
                 onChange={handleChange}
             >
-                <option value="none" disabled>
+                <option value="header" disabled>
                     Move to...
                 </option>
                 <option value="currentlyReading">
@@ -23,6 +27,7 @@ const OptionsMenu = ({ onOptionSelected }) => {
                 </option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
+                <option value="none">None</option>
             </select>
         </div>
     );
